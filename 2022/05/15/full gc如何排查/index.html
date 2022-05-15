@@ -16,20 +16,20 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="My first blog - 2022初衷2022年已经过去两个月，回头看看这两个月真觉得没啥收获，加上最近挺颓废的，迷茫中寻找方向，对于一个马上26的人来说，自感觉没有多少时间可以荒废，所以有时间就写写日记，生活也好学习也好，总之希望以后回首过去的时候，能知道某个时间段自己在干嘛，最主要的是要活得有方向 学习计划2022-源码系列   栈 阅读时间 阅读次数 进度    jdk  1 √">
+    <meta name="description" content="1. 生成HeapDump文件当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析 手动jmap -dump:format&#x3D;b,file&#x3D;xxx.hprof pid 自动123-XX:+HeapDumpBeforeFullGC-XX:+HeapDumpAfterFullGC-XX:HeapDumpPath&#x3D;xxx.hprof  2. 分析HeapDump文件123对于32位系统，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="非宁静无以致远">
-<meta property="og:url" content="http://example.com/2022/02/24/first-blog/index.html">
+<meta property="og:title" content="full gc如何排查">
+<meta property="og:url" content="http://example.com/2022/05/15/full%20gc%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/index.html">
 <meta property="og:site_name" content="Sakuragi27">
-<meta property="og:description" content="My first blog - 2022初衷2022年已经过去两个月，回头看看这两个月真觉得没啥收获，加上最近挺颓废的，迷茫中寻找方向，对于一个马上26的人来说，自感觉没有多少时间可以荒废，所以有时间就写写日记，生活也好学习也好，总之希望以后回首过去的时候，能知道某个时间段自己在干嘛，最主要的是要活得有方向 学习计划2022-源码系列   栈 阅读时间 阅读次数 进度    jdk  1 √">
+<meta property="og:description" content="1. 生成HeapDump文件当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析 手动jmap -dump:format&#x3D;b,file&#x3D;xxx.hprof pid 自动123-XX:+HeapDumpBeforeFullGC-XX:+HeapDumpAfterFullGC-XX:HeapDumpPath&#x3D;xxx.hprof  2. 分析HeapDump文件123对于32位系统，">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-24T15:39:36.930Z">
-<meta property="article:modified_time" content="2022-05-15T08:37:27.337Z">
+<meta property="article:published_time" content="2022-05-15T08:50:07.631Z">
+<meta property="article:modified_time" content="2022-05-15T14:48:22.804Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>非宁静无以致远 - Sakuragi27</title>
+  <title>full gc如何排查 - Sakuragi27</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="非宁静无以致远">
+            <span class="h2" id="subtitle" title="full gc如何排查">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-24 23:39" pubdate>
-        2022年2月24日 晚上
+      <time datetime="2022-05-15 16:50" pubdate>
+        2022年5月15日 下午
       </time>
     </span>
   
@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      372 字
+      675 字
     </span>
   
 
@@ -205,7 +205,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      6 分钟
     </span>
   
 
@@ -234,143 +234,31 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">非宁静无以致远</h1>
+            <h1 style="display: none">full gc如何排查</h1>
             
             <div class="markdown-body">
-              <h2 id="My-first-blog-2022"><a href="#My-first-blog-2022" class="headerlink" title="My first blog - 2022"></a>My first blog - 2022</h2><h2 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h2><p><strong>2022年已经过去两个月，回头看看这两个月真觉得没啥收获，加上最近挺颓废的，迷茫中寻找方向，对于一个马上26的人来说，自感觉没有多少时间可以荒废，所以有时间就写写日记，生活也好学习也好，总之希望以后回首过去的时候，能知道某个时间段自己在干嘛，最主要的是要活得有方向</strong></p>
-<h2 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h2><h3 id="2022-源码系列"><a href="#2022-源码系列" class="headerlink" title="2022-源码系列"></a>2022-源码系列</h3><table>
-<thead>
-<tr>
-<th>栈</th>
-<th align="center">阅读时间</th>
-<th align="center">阅读次数</th>
-<th align="right">进度</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>jdk</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>spring</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>spring mvc</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>spring boot</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>spring cloud</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>netty</td>
-<td align="center"></td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>dubbo</td>
-<td align="center">2021.12~2022.01</td>
-<td align="center">1</td>
-<td align="right">√</td>
-</tr>
-<tr>
-<td>kafka</td>
-<td align="center">2022.2~3</td>
-<td align="center"></td>
-<td align="right">todo</td>
-</tr>
-<tr>
-<td>apollo</td>
-<td align="center">2022.2~3</td>
-<td align="center"></td>
-<td align="right">todo</td>
-</tr>
-<tr>
-<td>dubbo-go</td>
-<td align="center">2022.3~4</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>redis</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>elasticsearch</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>zookeeper</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>k8s</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-</tbody></table>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><h3 id="2022"><a href="#2022" class="headerlink" title="2022"></a>2022</h3><table>
-<thead>
-<tr>
-<th>例</th>
-<th align="center">备注</th>
-<th align="right">进度</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>参加开源社区</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>认真看完一本书</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>一个人去旅游</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>坚持健身</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td>长胖15斤</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-</tbody></table>
+              <h1 id="1-生成HeapDump文件"><a href="#1-生成HeapDump文件" class="headerlink" title="1. 生成HeapDump文件"></a>1. 生成HeapDump文件</h1><p><strong>当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析</strong></p>
+<h3 id="手动"><a href="#手动" class="headerlink" title="手动"></a>手动</h3><p><code>jmap -dump:format=b,file=xxx.hprof pid</code></p>
+<h3 id="自动"><a href="#自动" class="headerlink" title="自动"></a>自动</h3><figure class="highlight diff"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-XX:+HeapDumpBeforeFullGC</span><br><span class="hljs-deletion">-XX:+HeapDumpAfterFullGC</span><br><span class="hljs-deletion">-XX:HeapDumpPath=xxx.hprof</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="2-分析HeapDump文件"><a href="#2-分析HeapDump文件" class="headerlink" title="2. 分析HeapDump文件"></a>2. 分析HeapDump文件</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell">对于<span class="hljs-number">32</span>位系统，单个进程内存的最大寻址空间为<span class="hljs-number">2</span>的<span class="hljs-number">32</span>次方，也就是4GB内存，其中一部分是用户空间内存，一部分是内核空间内存。<br>对于windows系统，内核空间默认是预留2GB，用户空间最大只有2GB，用户空间除了有堆内存，还有其它类型的内存，所以-<span class="hljs-type">Xmx</span>的最大值一定是小于2G，通常最大能设置到1536M<br>注：使用<span class="hljs-number">64</span>位<span class="hljs-keyword">jvm</span>虚拟机<br></code></pre></td></tr></table></figure>
+
+<h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p><code>jhat xxx.hprof -J-Xmx2048m</code></p>
+<h3 id="visualvm"><a href="#visualvm" class="headerlink" title="visualvm"></a>visualvm</h3><p><strong>修改jvm最大堆内存</strong><code>./etc/visualvm.conf</code></p>
+<h1 id="3-分析堆内存"><a href="#3-分析堆内存" class="headerlink" title="3. 分析堆内存"></a>3. 分析堆内存</h1><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><code>jstat -gc pid 频率(毫秒)</code></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">S0C：第⼀个幸存区的⼤⼩<br>S1C：第⼆个幸存区的⼤⼩<br>S0U：第⼀个幸存区的使⽤⼤⼩<br>S1U：第⼆个幸存区的使⽤⼤⼩<br>EC：伊甸园区的⼤⼩<br>EU：伊甸园区的使⽤⼤⼩<br>OC：⽼年代⼤⼩<br>OU：⽼年代使⽤⼤⼩<br>MC：⽅法区⼤⼩<br>MU：⽅法区使⽤⼤⼩<br><span class="hljs-symbol">CCSC:</span>压缩类空间⼤⼩<br><span class="hljs-symbol">CCSU:</span>压缩类空间使⽤⼤⼩<br>YGC：年轻代垃圾回收次数<br>YGCT：年轻代垃圾回收消耗时间<br>FGC：⽼年代垃圾回收次数<br>FGCT：⽼年代垃圾回收消耗时间<br>GCT：垃圾回收消耗总时间<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JVM/">JVM</a>
+                    
+                  </div>
                 
                 
               </div>
@@ -386,15 +274,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/05/15/%E7%94%9F%E4%BA%A7full%20gc%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">生产full gc的排查记录</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2022/05/15/%E7%94%9F%E4%BA%A7full%20gc%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/">
+                        <span class="hidden-mobile">生产full gc的排查记录</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
