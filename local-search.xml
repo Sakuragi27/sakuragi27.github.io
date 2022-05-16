@@ -4,11 +4,50 @@
   
   
   <entry>
+    <title>源码阅读</title>
+    <link href="/2022/05/15/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E6%8A%80%E5%B7%A7/"/>
+    <url>/2022/05/15/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E6%8A%80%E5%B7%A7/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>markdown</title>
+    <link href="/2022/05/15/markdown/"/>
+    <url>/2022/05/15/markdown/</url>
+    
+    <content type="html"><![CDATA[<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><p><strong>行尾加两个空格</strong></p><h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><p><strong><a href="%E9%93%BE%E6%8E%A5%E6%88%96%E8%80%85%E7%9B%AE%E5%BD%95">title for link</a></strong></p><h2 id="树形"><a href="#树形" class="headerlink" title="树形"></a>树形</h2><p><strong>windwos:</strong> </p><figure class="highlight dos"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs dos">查看粗略的目录树: <span class="hljs-built_in">tree</span> /a<br>查看详细的目录树: <span class="hljs-built_in">tree</span> /f<br>生成详细的目录树: <span class="hljs-built_in">tree</span> /f &gt; demo.<span class="hljs-built_in">md</span><br></code></pre></td></tr></table></figure><h2 id="代码行"><a href="#代码行" class="headerlink" title="代码行"></a>代码行</h2><p><strong>用单个反引号（&#96;）定义段开始和结束</strong></p><h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p><strong>用三个反引号（&#96;）定义段开始和结束</strong></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>apollo架构解析</title>
+    <link href="/2022/05/15/apollo%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/"/>
+    <url>/2022/05/15/apollo%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>full gc如何排查</title>
     <link href="/2022/05/15/full%20gc%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/"/>
     <url>/2022/05/15/full%20gc%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5/</url>
     
-    <content type="html"><![CDATA[<h1 id="1-生成HeapDump文件"><a href="#1-生成HeapDump文件" class="headerlink" title="1. 生成HeapDump文件"></a>1. 生成HeapDump文件</h1><p><strong>当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析</strong></p><h3 id="手动"><a href="#手动" class="headerlink" title="手动"></a>手动</h3><p><code>jmap -dump:format=b,file=xxx.hprof pid</code></p><h3 id="自动"><a href="#自动" class="headerlink" title="自动"></a>自动</h3><figure class="highlight diff"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-XX:+HeapDumpBeforeFullGC</span><br><span class="hljs-deletion">-XX:+HeapDumpAfterFullGC</span><br><span class="hljs-deletion">-XX:HeapDumpPath=xxx.hprof</span><br></code></pre></td></tr></table></figure><h1 id="2-分析HeapDump文件"><a href="#2-分析HeapDump文件" class="headerlink" title="2. 分析HeapDump文件"></a>2. 分析HeapDump文件</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell">对于<span class="hljs-number">32</span>位系统，单个进程内存的最大寻址空间为<span class="hljs-number">2</span>的<span class="hljs-number">32</span>次方，也就是4GB内存，其中一部分是用户空间内存，一部分是内核空间内存。<br>对于windows系统，内核空间默认是预留2GB，用户空间最大只有2GB，用户空间除了有堆内存，还有其它类型的内存，所以-<span class="hljs-type">Xmx</span>的最大值一定是小于2G，通常最大能设置到1536M<br>注：使用<span class="hljs-number">64</span>位<span class="hljs-keyword">jvm</span>虚拟机<br></code></pre></td></tr></table></figure><h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p><code>jhat xxx.hprof -J-Xmx2048m</code></p><h3 id="visualvm"><a href="#visualvm" class="headerlink" title="visualvm"></a>visualvm</h3><p><strong>修改jvm最大堆内存</strong><code>./etc/visualvm.conf</code></p><h1 id="3-分析堆内存"><a href="#3-分析堆内存" class="headerlink" title="3. 分析堆内存"></a>3. 分析堆内存</h1><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><code>jstat -gc pid 频率(毫秒)</code></p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">S0C：第⼀个幸存区的⼤⼩<br>S1C：第⼆个幸存区的⼤⼩<br>S0U：第⼀个幸存区的使⽤⼤⼩<br>S1U：第⼆个幸存区的使⽤⼤⼩<br>EC：伊甸园区的⼤⼩<br>EU：伊甸园区的使⽤⼤⼩<br>OC：⽼年代⼤⼩<br>OU：⽼年代使⽤⼤⼩<br>MC：⽅法区⼤⼩<br>MU：⽅法区使⽤⼤⼩<br><span class="hljs-symbol">CCSC:</span>压缩类空间⼤⼩<br><span class="hljs-symbol">CCSU:</span>压缩类空间使⽤⼤⼩<br>YGC：年轻代垃圾回收次数<br>YGCT：年轻代垃圾回收消耗时间<br>FGC：⽼年代垃圾回收次数<br>FGCT：⽼年代垃圾回收消耗时间<br>GCT：垃圾回收消耗总时间<br></code></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="1-生成HeapDump文件"><a href="#1-生成HeapDump文件" class="headerlink" title="1. 生成HeapDump文件"></a>1. 生成HeapDump文件</h1><p><strong>当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析</strong></p><h3 id="手动"><a href="#手动" class="headerlink" title="手动"></a>手动</h3><p><code>jmap -dump:format=b,file=xxx.hprof pid</code></p><h3 id="自动"><a href="#自动" class="headerlink" title="自动"></a>自动</h3><figure class="highlight diff"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">-XX:+HeapDumpBeforeFullGC</span><br><span class="hljs-deletion">-XX:+HeapDumpAfterFullGC</span><br><span class="hljs-deletion">-XX:HeapDumpPath=xxx.hprof</span><br></code></pre></td></tr></table></figure><h1 id="2-分析HeapDump文件"><a href="#2-分析HeapDump文件" class="headerlink" title="2. 分析HeapDump文件"></a>2. 分析HeapDump文件</h1><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haskell">对于<span class="hljs-number">32</span>位系统，单个进程内存的最大寻址空间为<span class="hljs-number">2</span>的<span class="hljs-number">32</span>次方，也就是4GB内存，其中一部分是用户空间内存，一部分是内核空间内存。<br>对于windows系统，内核空间默认是预留2GB，用户空间最大只有2GB，用户空间除了有堆内存，还有其它类型的内存，所以-<span class="hljs-type">Xmx</span>的最大值一定是小于2G，通常最大能设置到1536M<br>注：使用<span class="hljs-number">64</span>位<span class="hljs-keyword">jvm</span>虚拟机<br></code></pre></td></tr></table></figure><h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p><code>jhat xxx.hprof -J-Xmx2048m</code></p><h3 id="visualvm"><a href="#visualvm" class="headerlink" title="visualvm"></a>visualvm</h3><p><strong>修改jvm最大堆内存</strong><code>./etc/visualvm.conf</code></p><h1 id="3-分析堆内存gc情况"><a href="#3-分析堆内存gc情况" class="headerlink" title="3. 分析堆内存gc情况"></a>3. 分析堆内存gc情况</h1><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><code>jstat -gc pid 频率(毫秒)</code></p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">S0C：第⼀个幸存区的⼤⼩<br>S1C：第⼆个幸存区的⼤⼩<br>S0U：第⼀个幸存区的使⽤⼤⼩<br>S1U：第⼆个幸存区的使⽤⼤⼩<br>EC：伊甸园区的⼤⼩<br>EU：伊甸园区的使⽤⼤⼩<br>OC：⽼年代⼤⼩<br>OU：⽼年代使⽤⼤⼩<br>MC：⽅法区⼤⼩<br>MU：⽅法区使⽤⼤⼩<br><span class="hljs-symbol">CCSC:</span>压缩类空间⼤⼩<br><span class="hljs-symbol">CCSU:</span>压缩类空间使⽤⼤⼩<br>YGC：年轻代垃圾回收次数<br>YGCT：年轻代垃圾回收消耗时间<br>FGC：⽼年代垃圾回收次数<br>FGCT：⽼年代垃圾回收消耗时间<br>GCT：垃圾回收消耗总时间<br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
@@ -23,11 +62,11 @@
   
   
   <entry>
-    <title>生产full gc的排查记录</title>
+    <title>生产full gc的排查</title>
     <link href="/2022/05/15/%E7%94%9F%E4%BA%A7full%20gc%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/"/>
     <url>/2022/05/15/%E7%94%9F%E4%BA%A7full%20gc%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/</url>
     
-    <content type="html"><![CDATA[<h2 id="My-first-blog-2022"><a href="#My-first-blog-2022" class="headerlink" title="My first blog - 2022"></a>My first blog - 2022</h2><p><strong>2022年已经过去两个月，回头看看这两个月真觉得没啥收获，加上最近挺颓废的，迷茫中寻找方向，对于一个马上26的人来说，自感觉没有多少时间可以荒废，所以有时间就写写日记，生活也好学习也好，总之希望以后回首过去的时候，能知道某个时间段自己在干嘛，最主要的是要活得有方向</strong></p>]]></content>
+    <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1><p><strong>2022年已经过去两个月，回头看看这两个月真觉得没啥收获，加上最近挺颓废的，迷茫中寻找方向，对于一个马上26的人来说，自感觉没有多少时间可以荒废，所以有时间就写写日记，生活也好学习也好，总之希望以后回首过去的时候，能知道某个时间段自己在干嘛，最主要的是要活得有方向</strong></p>]]></content>
     
     
     <categories>

@@ -24,7 +24,7 @@
 <meta property="og:description" content="1. 生成HeapDump文件当系统频繁发生full gc, 首先要生成并导出堆转储快照, 用于分析 手动jmap -dump:format&#x3D;b,file&#x3D;xxx.hprof pid 自动123-XX:+HeapDumpBeforeFullGC-XX:+HeapDumpAfterFullGC-XX:HeapDumpPath&#x3D;xxx.hprof  2. 分析HeapDump文件123对于32位系统，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-15T08:50:07.631Z">
-<meta property="article:modified_time" content="2022-05-15T14:48:22.804Z">
+<meta property="article:modified_time" content="2022-05-16T00:31:00.277Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      675 字
+      679 字
     </span>
   
 
@@ -245,7 +245,7 @@
 
 <h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p><code>jhat xxx.hprof -J-Xmx2048m</code></p>
 <h3 id="visualvm"><a href="#visualvm" class="headerlink" title="visualvm"></a>visualvm</h3><p><strong>修改jvm最大堆内存</strong><code>./etc/visualvm.conf</code></p>
-<h1 id="3-分析堆内存"><a href="#3-分析堆内存" class="headerlink" title="3. 分析堆内存"></a>3. 分析堆内存</h1><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><code>jstat -gc pid 频率(毫秒)</code></p>
+<h1 id="3-分析堆内存gc情况"><a href="#3-分析堆内存gc情况" class="headerlink" title="3. 分析堆内存gc情况"></a>3. 分析堆内存gc情况</h1><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p><code>jstat -gc pid 频率(毫秒)</code></p>
 <figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">S0C：第⼀个幸存区的⼤⼩<br>S1C：第⼆个幸存区的⼤⼩<br>S0U：第⼀个幸存区的使⽤⼤⼩<br>S1U：第⼆个幸存区的使⽤⼤⼩<br>EC：伊甸园区的⼤⼩<br>EU：伊甸园区的使⽤⼤⼩<br>OC：⽼年代⼤⼩<br>OU：⽼年代使⽤⼤⼩<br>MC：⽅法区⼤⼩<br>MU：⽅法区使⽤⼤⼩<br><span class="hljs-symbol">CCSC:</span>压缩类空间⼤⼩<br><span class="hljs-symbol">CCSU:</span>压缩类空间使⽤⼤⼩<br>YGC：年轻代垃圾回收次数<br>YGCT：年轻代垃圾回收消耗时间<br>FGC：⽼年代垃圾回收次数<br>FGCT：⽼年代垃圾回收消耗时间<br>GCT：垃圾回收消耗总时间<br></code></pre></td></tr></table></figure>
 
             </div>
@@ -274,12 +274,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/05/15/apollo%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">apollo架构解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
                       <a href="/2022/05/15/%E7%94%9F%E4%BA%A7full%20gc%E6%8E%92%E6%9F%A5%E8%AE%B0%E5%BD%95/">
-                        <span class="hidden-mobile">生产full gc的排查记录</span>
+                        <span class="hidden-mobile">生产full gc的排查</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
